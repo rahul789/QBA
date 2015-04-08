@@ -1,0 +1,75 @@
+{>"header"/}
+
+		<h2>Add Topic</h2>
+
+
+
+
+<div ng-app="EditTopicBox" ng-controller="AddNewTopicController">
+	
+
+
+SubjectName: <input type=text name="Subjectname" ng-model="subjectname" required><br><br>
+<div>
+Description: <textarea name="Description"ng-model="description" required></textarea><br><br>
+</div>
+
+   <div id="button_ctrls">
+			  
+			 <a href="/edittopic">
+			<input type="button" value="back" />
+			</a>
+			
+		    <input type='button' value="save" ng-click="go(subjectname,description)" />
+		    
+
+		</div>
+		</div>
+		<script>
+		
+     
+		var addtopic= angular.module("EditTopicBox",[]);
+             addtopic.controller("AddNewTopicController",function($scope, $http){
+             var res;
+             addtopic=$http.get("/qba/subjects").success(function(data) {
+            $scope.subjects = data;
+            res=data;
+            console.log(JSON.stringify(data));
+
+          });
+          
+         $scope.go=function(Subjectname,description){ 
+        			var flag;
+        			
+        		
+		         for(var i=0;i<res.length;i++){
+		         console.log(i);
+		         	if((res[i].SubjectName).toUpperCase() == Subjectname.toUpperCase()){
+		         	
+		        		 flag=false;
+		        		 break;
+		        	 	 }else{
+		        			 flag=true;
+		        			
+		        		 }
+		         };
+		        if(flag){
+
+		        	var addSub= $http.post("/addnewtopic",{"Subjectname":Subjectname,"Description":description});
+		        	
+		        	alert('subject added to database');
+		        	  window.location = "/edittopic";
+  
+		        	                     
+                 console.log('not matched');
+		         }else{
+		         alert('Subject already Exist');
+		                     
+                        location.reload();
+
+		             console.log('matched');
+		         }
+		        }
+           });
+
+</script>

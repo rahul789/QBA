@@ -1,0 +1,76 @@
+{>"header"/}
+
+		<h2>Add State</h2>
+
+
+
+    <div ng-app="EditPermissionBox" ng-controller="AddNewPermissionController">
+	
+
+
+Permission: <input type=text name="state" ng-model="state" required><br><br>
+<div>
+Description: <textarea name="Description"ng-model="description" required></textarea><br><br>
+</div>
+
+   <div id="button_ctrls">
+			  
+			 <a href="/editpermissn">
+			<input type="button" value="back" />
+			</a>
+			
+		    <input type='button' value="save" ng-click="go(state,description)" />
+		    
+
+		</div>
+		</div>
+		<script>
+		
+     
+		var addper= angular.module("EditPermissionBox",[]);
+             addper.controller("AddNewPermissionController",function($scope, $http){
+             var res;
+             addper=$http.get("/qba/editpermission").success(function(data) {
+            $scope.permission = data;
+            res=data;
+            console.log(JSON.stringify(data));
+
+          });
+          
+         $scope.go=function(State,Description){ 
+        			var flag;
+        			
+        		
+		         for(var i=0;i<res.length;i++){
+		         console.log(i);
+		         	if((res[i].State).toUpperCase() == State.toUpperCase()){
+		         	
+		        		 flag=false;
+		        		 break;
+		        	 	 }else{
+		        			 flag=true;
+		        			
+		        		 }
+		         };
+		        if(flag){
+
+		        	
+		        	alert('permission added to database');
+		        var addPer= $http.post("/addnewpermission",{"State":State,"Description":Description});
+
+		        	  window.location = "/editpermissn";
+  
+		        	                     
+                 console.log('not matched');
+		         }else{
+		         alert('permission already Exist');
+		                     
+                        location.reload();
+
+		             console.log('matched');
+		         }
+		        }
+           });
+
+</script>
+

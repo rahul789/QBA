@@ -1,0 +1,276 @@
+{>"header"/}
+
+	<script src="/ckeditor/ckeditor.js"></script>
+	<script src="/ckeditor/highlight.js"></script>
+
+	<script src="/ckeditor/adapters/jquery.js"></script>
+	
+
+	<link rel="stylesheet" type="text/css" href="/ckeditor/contents.css"></link>
+	<link rel="stylesheet" type="text/css" href="/ckeditor/highlight.css"></link>
+
+<div id="input_container" class="container" ng-app="Selectbox" ng-controller="SelectController">
+	<form method="post" action="/createQuestion" enctype="multipart/form-data">
+		<h1> Create New Question</h1>
+		<ul class="category_hdr" >
+			<li>
+				<label class="cat_heading">Subject</label>
+				<select id="subjectOption" ng-change="SubjectChange(this, event)" ng-model="obj.x" ng-options="sub.SubjectName for sub in subjects"><option value="">-- Select Subject --</option></select>
+				<input type="hidden" name="subject" id="subject" value="{~lb}{~lb}obj.x.SubjectId{~rb}{~rb}"/>
+				
+			</li>
+
+			<li>
+				<label class="cat_heading">Sub Topic</label>
+				<select id="subtopicOption" ng-model="obj.y" ng-options="subt.Title for subt in subtopics"><option value="">-- Select SubTopic --</option></select>
+				<input type="hidden" name="subtopic" id="subtopic" value="{~lb}{~lb}obj.y.SubTopicId{~rb}{~rb}"/>
+
+			</li>
+
+			<li>
+				<label class="cat_heading">Question type</label>
+				<select id='answer_type' ng-change="QuestionTypeChange(this, event)" ng-model='obj.z' ng-options=" at.State for at in questiontypes"><option value="">-- Question Type --</option></select>
+				<input type="hidden" name="questiontype" value="{~lb}{~lb}obj.z.QuestionTypeId{~rb}{~rb}"/>
+			</li>
+
+
+			<li>
+				<label class="cat_heading">Question Level</label>
+				<select id='question_level_type' ng-model='obj.a' ng-options=" quesLev.LevelName for quesLev in questionlevels"><option value="">-- Question Level --</option></select>
+				<input type="hidden" name="questionlevel" value="{~lb}{~lb}obj.a.QuestionLevelId{~rb}{~rb}"/>
+			</li>
+
+		</ul>
+		<input type="hidden" name="authorname" value="{username}" />
+		<input type="hidden" name="authorid" value="{userid}" />
+		<input type="hidden" name="approverid" value="{approverid}" />
+
+		<div class="textfieldsContainer">
+
+
+			<div id="question">
+				<h2> Question:</h2>
+
+					<div class="description">
+						<textarea id="questionDescription" name='question_description' rows='4' cols='50'></textarea>
+					</div>
+					<div class="image">
+						<div class="upload">
+							<input type='file' name='question_image' accept='.png,.jpg,.jpeg' onchange='PreviewImage(this, event);'/><img class='preview' alt=" " />
+						</div>
+					</div>
+			</div>
+
+			<div id='answers'>
+
+				<h2> Answer Options: </h2>
+			
+
+				<div class="ans_container">
+					<div class='option_a options'>
+						<p> Option A:</p>
+						<div class="description">
+							<textarea name='optionA_description' rows='4' cols='50'></textarea>
+						</div>
+						<div class="image">
+							<div class="upload">
+								<input type='file' name='optionA_image' accept='.png,.jpg,.jpeg' onchange='PreviewImage(this, event);'/><img class='preview' />
+							</div>
+						</div>
+					</div>
+
+					<div class='option_b options'>
+						<p> Option B:</p>
+						<div class="description">
+							<textarea name='optionB_description' rows='4' cols='50'></textarea>
+						</div>
+						<div class="image">
+							<div class="upload">
+								<input type='file' name='optionB_image' accept='.png,.jpg,.jpeg' onchange='PreviewImage(this, event);'/><img class='preview' />
+							</div>
+						</div>
+					</div>
+
+					<div class='option_c options'>
+						<p> Option C:</p>
+						<div class="description">
+							<textarea name='optionC_description' rows='4' cols='50'></textarea>
+						</div>
+						<div class="image">
+							<div class="upload">
+								<input type='file' name='optionC_image' accept='.png,.jpg,.jpeg' onchange='PreviewImage(this, event);'/><img class='preview' />
+							</div>
+						</div>
+					</div>
+
+					<div class='option_d options'>
+						<p> Option D:</p>
+						<div class="description">
+							<textarea name='optionD_description' rows='4' cols='50'></textarea>
+						</div>
+						<div class="image">
+							<div class="upload">
+								<input type='file' name='optionD_image' accept='.png,.jpg,.jpeg' onchange='PreviewImage(this, event);'/><img class='preview' />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="estimates">
+				<h2> Time Estimate: <span style="font-size:11px;">(In Minutes)</span></h2>
+				<input type="number" name="time_estimate" value=""/>
+			</div>
+			<div id="ans_result">
+				
+				<h2> Answer <span style="font-size:11px;">(Select the appropriate Question Type)</span>:</h2>
+				<div id="single_answer" class="left_30" style="display:none">
+					<label><input type="radio" name="answer" value="A"/>Option A</label>
+					<label><input type="radio" name="answer" value="B"/>Option B</label>
+					<label><input type="radio" name="answer" value="C"/>Option C</label>
+					<label><input type="radio" name="answer" value="D"/>Option D</label>
+				</div>
+				<div id="multiple_answer" class="left_30" style="display:none">
+					<label><input type="checkbox" name="answer" value="A"/>Option A</label>
+					<label><input type="checkbox" name="answer" value="B"/>Option B</label>
+					<label><input type="checkbox" name="answer" value="C"/>Option C</label>
+					<label><input type="checkbox" name="answer" value="D"/>Option D</label>
+				</div>
+				
+			</div>
+		</div>
+		<div id="button_ctrls">
+			<input type="reset" value="Reset"/>
+			<a href=''>
+			<input type="button" ng-click="OpenPreview(this,event)" value="Preview" />
+			<input type="submit" value="Submit" />
+		</div>
+	</form>
+</div>
+
+<div id="Preview_container">
+
+	<h1> Preview</h1>
+	<ul class="category_hdr" >
+		<li>
+			<label >Subject : {~lb}{~lb}obj.x.SubjectId{~rb}{~rb}</label>
+		</li>
+
+		<li>
+			<label >SubTopic : <span class="res_catrgory">{~lb}{~lb}obj.y.Title{~rb}{~rb}</span></label>
+		</li>
+
+		<li>
+			<label >Question Type : <span class="res_catrgory">{~lb}{~lb}obj.z.State{~rb}{~rb}</span></label>
+		</li>
+
+
+		<li>
+			<label >Question Level : <span class="res_catrgory">{~lb}{~lb}obj.a.State{~rb}{~rb}</span></label>
+		</li>
+
+	</ul>
+
+</div>
+
+
+
+
+<script>
+var pdpApp = angular.module("Selectbox",[]);
+pdpApp.controller("SelectController",function($scope, $http){
+
+	$scope.count = 0;
+
+		var subjectsRequest = $http.get("/qba/subjects");
+	
+        subjectsRequest.success(function(data, status, headers, config) {
+            $scope.subjects = data;
+        });
+        subjectsRequest.error(function(data, status, headers, config) {
+
+            console.log("error",data, status, headers, config);
+        });
+
+        $scope.timestamp = (new Date()).getTime();
+
+        $scope.SubjectChange = function(elem, event){
+        	var subjectSelected = this.obj.x.SubjectId;
+        	$scope.subtopics = [];
+        	var subTopicRequest = $http.post("/qba/subtopics",{"subjectid":subjectSelected});
+        	subTopicRequest.success(function(data, status, headers, config) {
+	            $scope.subtopics = data;
+	        });
+	        subTopicRequest.error(function(data, status, headers, config) {
+
+	            console.log("error",data, status, headers, config);
+	        });
+        };
+
+        $scope.QuestionTypeChange = function(elem, event){
+        	
+        	var type = this.obj.z.QuestionTypeId;
+        	$('#multiple_answer input[type="checkbox"], #single_answer input[type="radio"]').attr('checked',false);
+        	if(Number(type) == 1){  
+        		$("#single_answer").show().removeAttr('disabled');
+        		$("#multiple_answer").hide().attr('disabled','disabled');
+        	} else if(Number(type) == 2){
+        		$("#multiple_answer").show().removeAttr('disabled');;
+        		$("#single_answer").hide().attr('disabled','disabled');
+        	} else {
+        		$("#single_answer").hide().attr('disabled','disabled');
+        		$("#multiple_answer").hide().attr('disabled','disabled');
+        	}
+        };
+
+
+        
+        var answerTypeRequest = $http.get("/qba/questiontypes");
+	
+        answerTypeRequest.success(function(data, status, headers, config) {
+            $scope.questiontypes = data;
+        });
+        answerTypeRequest.error(function(data, status, headers, config) {
+            console.log("error",data, status, headers, config);
+        });
+
+
+        
+        var questionLevelRequest = $http.get("/qba/questionlevels");
+	
+        questionLevelRequest.success(function(data, status, headers, config) {
+            $scope.questionlevels = data;
+            console.log(JSON.stringify(data));
+        });
+        questionLevelRequest.error(function(data, status, headers, config) {
+            console.log("error",data, status, headers, config);
+        });
+
+
+        $scope.OpenPreview = function(elem,event){
+        console.log('console    '+event);
+        Preview_container.show();
+
+        }
+
+                
+});
+
+
+var PreviewImage = function(elem, event) {
+	var element = $(elem);
+    var oFReader = new FileReader();
+    oFReader.readAsDataURL(element[0].files[0]);
+
+    oFReader.onload = function (oFREvent) {
+        element.next('img').attr('src', oFREvent.target.result);
+    };
+};
+
+CKEDITOR.disableAutoInline = true;
+CKEDITOR.tools.setTimeout( function(){ 
+	$( 'textarea' ).ckeditor();
+}, 0);
+
+
+</script>

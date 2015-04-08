@@ -1,0 +1,81 @@
+{>"header"/}
+
+		<h2>Edit  New Topic</h2>
+
+
+
+
+<div ng-app="EditNewTopic" ng-controller="EditNewTopicController">
+
+<!--QuestionLevelId: <input type=text name="levelid" ng-model=""><br><br>-->
+
+SubjectName: <input type=text name="subjectname" ng-model="subjectname" value=""><br><br>
+<div>
+Description: <textarea name="subjectdescription"ng-model="description"></textarea><br><br>
+</div>
+
+<!--Flag:<input type=text name="Flag" ng-model="" value="true"><br><br>-->
+
+   <div id="button_ctrls">
+			  
+			 <a href="/edittopic">
+			<input type="button" value="back" />
+			</a>
+		    <input type="submit" value="save" ng-click="goo()"/>
+		    
+
+		</div>
+		</form>
+			<script>
+		
+        		var addtopic = angular.module("EditNewTopic",[]);
+             addtopic.controller("EditNewTopicController",function($scope, $http){
+              console.log("****** ");
+              
+              var sample=JSON.parse(sessionStorage.getItem("test"));
+                            console.log(JSON.stringify(sample));
+
+              $scope.subjectname=sample.SubjectName;
+              $scope.description=sample.Description;
+		              var res;
+             addtopic=$http.get("/qba/subjects").success(function(data) {
+            $scope.Subjects = data;
+            res=data;
+            console.log(JSON.stringify(data));
+            });
+          
+              $scope.goo=function(){
+              console.log("edited"+$scope.description);
+               var flag;
+        			
+        		
+		         for(var i=0;i<res.length;i++){
+		         console.log(i);
+		         	if((res[i].Description).toUpperCase() == $scope.description.toUpperCase()){
+		         	
+		        		 flag=false;
+		        		 break;
+		        	 	 }else{
+		        			 flag=true;
+		        			
+		        		 }
+		         };
+
+		          if(flag){
+
+		             var addtop= $http.post("/addeditedtopic",{"SubjectId":sample.SubjectId,"subjectdescription":$scope.description});
+                     window.location = "/edittopic";
+
+
+		         }else{
+		         alert('subject already Exist');
+		             location.reload();
+
+
+		             console.log('matched');
+		         }
+               }
+           });
+
+
+</script>

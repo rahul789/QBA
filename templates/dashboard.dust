@@ -1,0 +1,37 @@
+{>"header"/}
+
+<a href="/createquest">
+<div class="dashlets">
+<label class="green-text totbilled">Create question</label>
+</div>
+</a>
+
+<a href="/edittopic">
+<div class="dashlets">
+<label class="green-text totbilled">Edit Topics</label>
+</div>
+</a>
+<a href="/editlev">
+<div class="dashlets">
+<label class="green-text totbilled">Edit Level</label>
+</div>
+</a>
+<a href="/editappvr">
+<div class="dashlets">
+<label class="green-text totbilled">Assign Approver</label>
+</div>
+</a>
+<a href="/edittyp">
+<div class="dashlets">
+<label class="green-text totbilled">Edit Question Type</label>
+</div>
+</a>
+<a href="/editstate">
+<div class="dashlets">
+<label class="green-text totbilled">Edit Question State</label>
+</div>
+<a href="/editpermissn">
+<div class="dashlets">
+<label class="green-text totbilled">Edit Permission</label>
+</div>
+</a>

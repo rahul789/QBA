@@ -1,0 +1,83 @@
+{>"header"/}
+
+
+  <h2>Edit Level</h2>
+ 
+      <script data-require="angular.js@*" data-semver="1.2.0-rc3-nonmin" src="http://code.angularjs.org/1.2.0-rc.3/angular.js"></script>
+      <script data-require="ng-table@*" data-semver="0.3.0" src="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.js"></script>
+     
+      <link data-require="ng-table@*" data-semver="0.3.0" rel="stylesheet" href="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.css" />
+      <link data-require="bootstrap-css@*" data-semver="3.0.0" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+      
+
+     
+
+<div ng-app="" ng-controller="EditPermissionController">
+
+    <table ng-table class="table">
+       <tr>
+         <td><b>Permissions</b></td>
+         <td><b>Description</b></td>
+         <td><b>Action</b></td>
+    </tr>
+        <tr ng-repeat="x in permission">
+          
+          <td>{{ x.State }} </td>
+          <td>{{ x.Description }} </td>
+                 
+
+          <td> <a  href='/editonepermission' >
+           <input type="button"  ng-click="go(x)"  value="Edit"/></a></td>
+          <a href='/editpermissn'>
+          <td> <input type="button" ng-click="RemovePer(this,event, '{~lb}{~lb}x.PermissionId{~rb}{~rb}')" value="Remove" /></td>
+         
+         </a>
+      </tr>
+      
+    </table>
+    <div id="button_ctrl">
+              <a href="/editpermission/addnewpermission">
+               <input type="button" value="Add" />
+              </a>
+             <a href="/">
+               <input type="button" value="BACK"/>
+              </a>
+       <div>
+
+</div>
+
+
+ <script>
+
+    function EditPermissionController($scope,$http){
+
+         $http.get("/qba/editpermission").success(function(data) {
+            $scope.permission = data;
+            console.log(JSON.stringify(data));
+          });
+            $scope.go = function(recievedata){
+        console.log('dkjcbsodcj n'+recievedata);
+      var twist=JSON.stringify(recievedata);
+         sessionStorage.setItem("test", twist );
+         };
+  $scope.RemovePer = function(elem, event, permissionid) {
+        
+                      if(permissionid && permissionid !=''){
+                      console.log(permissionid);
+                        var removeperm= $http.post("/removepermission",{"permissionid":permissionid});
+                        removeperm.success(function(data, status, headers, config) {
+                           $scope.removed = status;
+                           console.log("datatata"+JSON.stringify(status));
+                                           if(status==200){
+                                           location.reload();
+                  }
+                              
+
+
+          });
+            }   
+        };
+
+          };
+
+</script>

@@ -1,0 +1,76 @@
+{>"header"/}
+
+		<h2>Add State</h2>
+
+
+
+    <div ng-app="EditStateeBox" ng-controller="AddNewStateController">
+	
+
+
+QuestionState: <input type=text name="State" ng-model="state" required><br><br>
+<div>
+Description: <textarea name="Description"ng-model="description" required></textarea><br><br>
+</div>
+
+   <div id="button_ctrls">
+			  
+			 <a href="/editstate">
+			<input type="button" value="back" />
+			</a>
+			
+		    <input type='button' value="save" ng-click="go(state,description)" />
+		    
+
+		</div>
+		</div>
+		<script>
+		
+     
+		var addstate= angular.module("EditStateeBox",[]);
+             addstate.controller("AddNewStateController",function($scope, $http){
+             var res;
+             addstatee=$http.get("/qba/editstate").success(function(data) {
+            $scope.questiontstate = data;
+            res=data;
+            console.log(JSON.stringify(data));
+
+          });
+          
+         $scope.go=function(State,Description){ 
+        			var flag;
+        			
+        		
+		         for(var i=0;i<res.length;i++){
+		         console.log(i);
+		         	if((res[i].State).toUpperCase() == State.toUpperCase()){
+		         	
+		        		 flag=false;
+		        		 break;
+		        	 	 }else{
+		        			 flag=true;
+		        			
+		        		 }
+		         };
+		        if(flag){
+
+		        	
+		        	alert('question state added to database');
+		        var addSub= $http.post("/addnewstate",{"State":State,"Description":Description});
+
+		        	  window.location = "/editstate";
+  
+		        	                     
+                 console.log('not matched');
+		         }else{
+		         alert('question state already Exist');
+		                     
+                        location.reload();
+
+		             console.log('matched');
+		         }
+		        }
+           });
+
+</script>
+

@@ -1,0 +1,78 @@
+{>"header"/}
+
+    <h2>Edit Approver</h2>
+
+
+        <script data-require="angular.js@*" data-semver="1.2.0-rc3-nonmin" src="http://code.angularjs.org/1.2.0-rc.3/angular.js"></script>
+        <script data-require="ng-table@*" data-semver="0.3.0" src="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.js"></script>
+     
+        <link data-require="ng-table@*" data-semver="0.3.0" rel="stylesheet" href="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.css" />
+        <link data-require="bootstrap-css@*" data-semver="3.0.0" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+      
+
+     
+
+<div ng-app="" ng-controller="ApproverController">
+
+    <table ng-table class="table">
+       <tr>
+         <td><b>Approver</b></td>
+         <td><b>SubjectName</b></td>
+         <td><b>Action</b></td>
+    </tr>
+      <tr ng-repeat="x in Approver">
+          <td>{{ x.ApproverName }}</td>
+          <td>{{ x.SubjectName }}</td>
+          <td><a href='/editoneapprover'>
+           <input type="button"  ng-click="go(x)"  value="Edit"/></a></td>
+          <td> <input type="button" ng-click="RemoveApprover(this,event, '{~lb}{~lb}x.ApproverId{~rb}{~rb}')" value="Remove" /></td>
+
+      </tr>
+      
+    </table>
+
+     <div id="button_ctrl">
+      <a href="/addapprover">
+
+        <input type="button" value="Add"/>
+
+       </a>
+             <a href="/">
+               <input type="button" value="BACK" />
+                </a>
+       <div>
+</div>
+<script>
+         function ApproverController($scope,$http){
+
+         $http.get("/approver").success(function(data) {
+            $scope.Approver = data;
+            console.log(JSON.stringify(data));
+          });
+         $scope.go = function(recievedata){
+        console.log('dkjcbsodcj n'+recievedata);
+      var twist=JSON.stringify(recievedata);
+         sessionStorage.setItem("test", twist );
+         }; 
+          $scope.RemoveApprover = function(elem, event, approverid) {
+        
+                      if(approverid && approverid !=''){
+                      console.log(approverid);
+                        var removeappr= $http.post("/removeapprover",{"approverid":approverid});
+                        removeappr.success(function(data, status, headers, config) {
+                           $scope.removed = status;
+                           console.log("datatata"+JSON.stringify(status));
+                                           if(status==200){
+                                           location.reload();
+                  }
+                              
+
+
+          });
+            }   
+        };
+
+
+ };
+
+</script>

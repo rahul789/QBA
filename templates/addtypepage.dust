@@ -1,0 +1,73 @@
+{>"header"/}
+
+    <h2>ADD Question Type</h2>
+
+    <div ng-app="EditTypeBox" ng-controller="AddNewTypeController">
+	
+
+
+QuestionType: <input type=text name="State" ng-model="state" required><br><br>
+<div>
+Description: <textarea name="Description"ng-model="description" required></textarea><br><br>
+</div>
+
+   <div id="button_ctrls">
+			  
+			 <a href="/edittyp">
+			<input type="button" value="back" />
+			</a>
+			
+		    <input type='button' value="save" ng-click="go(state,description)" />
+		    
+
+		</div>
+		</div>
+		<script>
+		
+     
+		var addtype= angular.module("EditTypeBox",[]);
+             addtype.controller("AddNewTypeController",function($scope, $http){
+             var res;
+             addtype=$http.get("/qba/edittype").success(function(data) {
+            $scope.questiontype = data;
+            res=data;
+            console.log(JSON.stringify(data));
+
+          });
+          
+         $scope.go=function(State,Description){ 
+        			var flag;
+        			
+        		
+		         for(var i=0;i<res.length;i++){
+		         console.log(i);
+		         	if((res[i].State).toUpperCase() == State.toUpperCase()){
+		         	
+		        		 flag=false;
+		        		 break;
+		        	 	 }else{
+		        			 flag=true;
+		        			
+		        		 }
+		         };
+		        if(flag){
+
+		        	
+		        	alert('question type added to database');
+		        var addSub= $http.post("/addnewtype",{"State":State,"Description":Description});
+
+		        	  window.location = "/edittyp";
+  
+		        	                     
+                 console.log('not matched');
+		         }else{
+		         alert('question type already Exist');
+		                     
+                        location.reload();
+
+		             console.log('matched');
+		         }
+		        }
+           });
+
+</script>

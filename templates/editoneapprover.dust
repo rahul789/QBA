@@ -1,0 +1,81 @@
+{>"header"/}
+
+		<h2>Edit  New Approver</h2>
+
+
+
+
+<div ng-app="EditNewApprover" ng-controller="EditNewApproverController">
+	
+
+<!--QuestionLevelId: <input type=text name="levelid" ng-model=""><br><br>-->
+
+ApproverName: <input type=text name="approvername" ng-model="ApproverName"><br><br>
+<div>
+SubjectName: <input type=text name="SubjectName" ng-model="subjectname" required><br><br>
+</div>
+
+
+   <div id="button_ctrls">
+			  
+			 <a href="/editappvr">
+			<input type="button" value="back" />  
+			</a>
+		    <input type="submit" value="save" ng-click="goo()"/>
+		  
+
+		</div>
+		</form>
+			<script>
+		
+        		var addapprover = angular.module("EditNewApprover",[]);
+             addapprover.controller("EditNewApproverController",function($scope, $http){
+		            
+		           console.log("****** ");
+              
+              var sample=JSON.parse(sessionStorage.getItem("test"));
+              $scope.ApproverName=sample.ApproverName;
+              $scope.subjectname=sample.SubjectName;
+                var res;
+             addlevel=$http.get("/approver").success(function(data) {
+            $scope.Approver = data;
+            res=data;
+            console.log(JSON.stringify(data));
+            });
+
+          $scope.goo=function(){
+              console.log("edited"+$scope.subjectname);
+               
+                            var flag;
+        			
+        		
+		         for(var i=0;i<res.length;i++){
+		         console.log(i);
+		 if((res[i].ApproverName).toUpperCase() == sample.ApproverName.toUpperCase() && res[i].SubjectName.toUpperCase() == $scope.subjectname.toUpperCase()){
+
+		        		 flag=false;
+		        		 break;
+		        	 	 }else{
+		        			 flag=true;
+		        			
+		        		 }
+		         };
+
+		          if(flag){
+
+		             var addlev= $http.post("/addeditedapprover",{"ApproverId":sample.ApproverId,"subjectname":$scope.subjectname});
+                                          window.location = "/editappvr";
+
+		         }else{
+		         alert('approver already Exist');
+		                location.reload();
+
+
+		             console.log('matched');
+		         }
+              }
+
+           });
+
+
+</script>

@@ -1,0 +1,78 @@
+{>"header"/}
+
+    <h2>Edit Question State</h2>
+
+      <script data-require="angular.js@*" data-semver="1.2.0-rc3-nonmin" src="http://code.angularjs.org/1.2.0-rc.3/angular.js"></script>
+      <script data-require="ng-table@*" data-semver="0.3.0" src="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.js"></script>
+     
+      <link data-require="ng-table@*" data-semver="0.3.0" rel="stylesheet" href="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.css" />
+      <link data-require="bootstrap-css@*" data-semver="3.0.0" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+      
+
+     
+
+<div ng-app="" ng-controller="EditStateController">
+
+    <table ng-table class="table">
+       <tr>
+         <td><b>QuestionState</b></td>
+         <td><b>Description</b></td>
+         <td><b>Action</b></td>
+    </tr>
+        <tr ng-repeat="x in questionstate" >
+          
+          <td>{{ x.State }} </td>
+          <td>{{ x.Description }} </td>
+                 
+
+          <td> <a  href="/editonestate">
+           <input type="button" ng-click="go(x)" value="Edit"/></a></td>
+          <td> <input type="button" ng-click="RemoveState(this,event, '{~lb}{~lb}x.QuestionStateId{~rb}{~rb}')" value="Remove" /></td>
+         
+         </a>
+      </tr>
+      
+    </table>
+    <div id="button_ctrl">
+      <a href="/edittopic/addnewstate">
+        <input type="button" value="Add" /></a>
+        <a href="/">
+         <input type="button" value="BACK"/>
+     </a>
+       <div>
+
+</div>
+
+<script>
+
+     function EditStateController($scope,$http){
+
+         $http.get("/qba/editstate").success(function(data) {
+            $scope.questionstate = data;
+            console.log(JSON.stringify(data));
+          });
+            $scope.go = function(recievedata){
+        console.log('dkjcbsodcj n'+recievedata);
+      var twist=JSON.stringify(recievedata);
+         sessionStorage.setItem("test", twist );
+         };
+  $scope.RemoveState = function(elem, event, questionstateid) {
+        
+                      if(questionstateid && questionstateid !=''){
+                      console.log(questionstateid);
+                        var removestat= $http.post("/removestate",{"questionstateid":questionstateid});
+                        removestat.success(function(data, status, headers, config) {
+                           $scope.removed = status;
+                           console.log("datatata"+JSON.stringify(status));
+                                           if(status==200){
+                                           location.reload();
+                  }
+                              
+
+
+          });
+            }   
+        };
+
+          };
+    </script>

@@ -1,0 +1,74 @@
+<div id="{pagetype}" class="page">
+    {!  Body Content  !}
+    <div data-role="content">
+        {@select key="{pagetype}"}
+            {@eq value="login"}
+                {>"login"/}
+            {/eq}
+            {@eq value="dashboard"}
+                {>"dashboard"/}
+            {/eq}
+            {@eq value="createquestion"}
+                {>"createquestionpage"/}
+            {/eq}
+            {@eq value="preview"}
+                {>"previewpage"/}
+            {/eq}
+            {@eq value="edittopic"}
+                {>"edittopicpage"/}
+            {/eq}
+             {@eq value="addtopic"}
+                {>"addtopicpage"/}
+            {/eq}
+            {@eq value="editnewtopic"}
+                {>"editonetopic"/}
+            {/eq}
+            {@eq value="editlevel"}
+                {>"editlevelpage"/}
+            {/eq}
+            {@eq value="addlevel"}
+                {>"addlevelpage"/}
+            {/eq}
+             {@eq value="editnewlevel"}
+                {>"editonelevel"/}
+            {/eq}
+            {@eq value="editapprover"}
+                {>"editapproverpage"/}
+            {/eq}
+             {@eq value="addapprvr"}
+                {>"addapproverpage"/}
+            {/eq}
+            {@eq value="editnewapprover"}
+                {>"editoneapprover"/}
+            {/eq}
+            {@eq value="edittype"}
+                {>"edittypepage"/}
+            {/eq}
+            {@eq value="addtype"}
+                {>"addtypepage"/}
+            {/eq}
+             {@eq value="editnewtype"}
+                {>"editonetype"/}
+            {/eq}
+             {@eq value="editstate"}
+                {>"editstatepage"/}
+            {/eq}
+            {@eq value="addstate"}
+                {>"addstatepage"/}
+            {/eq}
+            {@eq value="editnewstate"}
+                {>"editonestate"/}
+            {/eq}
+             {@eq value="editpermission"}
+                {>"editpermissionpage"/}
+            {/eq}
+            {@eq value="addpermission"}
+                {>"addpermissionpage"/}
+            {/eq}
+            {@eq value="editnewpermission"}
+                {>"editonepermission"/}
+            {/eq}
+   
+        {/select}
+    </div>
+</div>

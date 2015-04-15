@@ -45,7 +45,7 @@ Description: <textarea name="leveldescription"ng-model="leveldescription" requir
 
 
             $scope.go=function(levelname,leveldescription){ 
-        			var flag;
+        			var flag=true;
         			
         		
 		         for(var i=0;i<res.length;i++){

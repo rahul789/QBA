@@ -9,8 +9,9 @@
 	
 
 <!--QuestionLevelId: <input type=text name="levelid" ng-model=""><br><br>-->
-
-LevelName:<input type=text name="levelname" ng-model="levelname" value=""><br><br>
+     
+ <label>LevelName:</label>
+<input type=text name="levelname" ng-model="levelname" ng-readonly="levelname" ><br><br>
 <div>
 Desciption: <textarea name="leveldescription"ng-model="description"></textarea><br><br>
 </div>

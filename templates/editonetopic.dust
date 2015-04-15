@@ -9,7 +9,7 @@
 
 <!--QuestionLevelId: <input type=text name="levelid" ng-model=""><br><br>-->
 
-SubjectName: <input type=text name="subjectname" ng-model="subjectname" value=""><br><br>
+SubjectName: <input type=text name="subjectname" ng-model="subjectname" readonly><br><br>
 <div>
 Description: <textarea name="subjectdescription"ng-model="description"></textarea><br><br>
 </div>

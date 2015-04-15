@@ -40,7 +40,7 @@ Subject: <input type=text name="subjectname" ng-model="subjectname" required><br
           });
           
            $scope.go=function(approvername,subjectname){ 
-        			var flag;
+        			var flag=true;
         			 for(var i=0;i<res.length;i++){
 		         console.log(i);
 		      if((res[i].ApproverName).toUpperCase() == approvername.toUpperCase() && res[i].SubjectName.toUpperCase() == subjectname.toUpperCase()){

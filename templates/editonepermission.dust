@@ -9,7 +9,7 @@
 
 <!--QuestionLevelId: <input type=text name="levelid" ng-model=""><br><br>-->
 
-Permission: <input type=text name="state" ng-model="state" value=""><br><br>
+Permission: <input type=text name="state" ng-model="state" readonly><br><br>
 <div>
 Description: <textarea name="description"ng-model="description"></textarea><br><br>
 </div>
@@ -18,7 +18,7 @@ Description: <textarea name="description"ng-model="description"></textarea><br><
 
    <div id="button_ctrls">
 			  
-			 <a href="/">
+			 <a href="/editpermissn">
 			<input type="button" value="back" />
 			</a>
 		    <input type="submit" value="save" ng-click="goo()"/>

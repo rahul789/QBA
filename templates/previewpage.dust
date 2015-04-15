@@ -1,1 +1,118 @@
 {>"header"/}
+<body id='loading'>
+<div ng-app="preview" ng-controller="PreviewController">
+	<form method="post"   enctype="multipart/form-data">
+
+
+		<div>
+			<ul class="category_hdr" >
+				<li>
+				Subject:<label id="sub" class="cat_heading"></label><br><br>
+				</li>
+				<li>
+				Subtopic: <label id="subTopic" class="cat_heading"></label><br><br>
+				</li>
+				<li>
+				Question Type: <label id="qt" class="cat_heading"></label><br><br>
+				</li>
+				<li>
+				Question Level: <label id="ql" class="cat_heading"></label><br><br>
+				</li>
+			</ul>
+		</div>
+
+		<input type="hidden" name="authorid" value="{userid}" />
+		<input type="hidden" name="approverid" value="{approverid}" />
+
+
+		<div>
+			<ul class="category_hdr" >
+				<li>
+				Question: <label id="que"></label><br><br>
+				</li>
+			</ul>
+		</div>
+
+		<div>
+			<ul class="category_hdr" >
+				<li>
+				OptionA: <label id="op1"></label><br><br>
+				</li>
+				<li>
+				OptionB: <label id="op2"></label><br><br>
+				</li>
+				</div>
+				<div>
+				<ul class="category_hdr" >
+				<li>
+				OptionC: <label id="op3"></label><br><br>
+				</li>
+				<li>
+				OptionD: <label id="op4"></label><br><br>
+				</li>
+			</ul>	
+		</div>
+		<div id='block'> 
+				Answer:<label id="ans"  display: inline-block; width: 100px;></label><br><br>
+        </div>
+
+		<div id="button_ctrls">
+				<a href='/createquest'>
+				<input type="button" value="Back" /></a>
+				<input type="submit" value="Submit"  ng-click='goback()'/>
+		</div>
+
+
+	</form>
+</div>
+</body>
+<script>
+
+        		var prev = angular.module("preview",[]);
+             prev.controller("PreviewController",function($scope, $http){
+              var res=document.getElementById("que");
+              var response=sessionStorage.getItem("question");
+              
+              res.innerHTML=response;
+               console.log('djbciudbc'+sessionStorage.getItem("Selectedoption0"));
+              document.getElementById('sub').innerHTML=sessionStorage.getItem("subject");
+              document.getElementById('subTopic').innerHTML=sessionStorage.getItem("subtopic");
+
+			document.getElementById('qt').innerHTML=sessionStorage.getItem("state");
+
+			document.getElementById('ql').innerHTML=sessionStorage.getItem("level");
+			document.getElementById('op1').innerHTML=sessionStorage.getItem("opt1");
+			document.getElementById('op2').innerHTML=sessionStorage.getItem("opt2");
+			document.getElementById('op3').innerHTML=sessionStorage.getItem("opt3");
+			document.getElementById('op4').innerHTML=sessionStorage.getItem("opt4");
+			document.getElementById('ans').innerHTML=sessionStorage.getItem("Selectedoption");
+             
+			for(var i=0;i<4;i++){
+			
+             if((sessionStorage.getItem("Selected"+i))=='true'){
+             console.log('ans  '+sessionStorage.getItem("Selectedoption"+i));
+             var label = document.createElement('label');
+              document.getElementById('block').appendChild(label);
+              label.innerHTML =sessionStorage.getItem("Selectedoption"+i);
+             }
+              };
+           
+    		document.getElementById('loading').onblur=function load(){
+
+    		sessionStorage.removeItem("question");
+    		};
+    		 $scope.goback = function(){
+
+    		
+             
+    		sessionStorage.removeItem('Selectedoption0');
+    		sessionStorage.removeItem('Selectedoption1');
+    		sessionStorage.removeItem('Selectedoption2');
+    		sessionStorage.removeItem('Selectedoption3');
+    	   
+    		}
+    		
+       });
+    		
+
+</script>

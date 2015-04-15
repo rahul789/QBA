@@ -52,7 +52,8 @@
 				<h2> Question:</h2>
 
 					<div class="description">
-						<textarea id="questionDescription" name='question_description' rows='4' cols='50'></textarea>
+					<textarea name="questondescription" data-ng-model="questionTxt" data-ck-editor></textarea>
+						
 					</div>
 					<div class="image">
 						<div class="upload">
@@ -70,7 +71,7 @@
 					<div class='option_a options'>
 						<p> Option A:</p>
 						<div class="description">
-							<textarea name='optionA_description' rows='4' cols='50'></textarea>
+							<textarea name='optionA_description' data-ng-model="optionA" data-ck-editor></textarea>
 						</div>
 						<div class="image">
 							<div class="upload">
@@ -82,7 +83,7 @@
 					<div class='option_b options'>
 						<p> Option B:</p>
 						<div class="description">
-							<textarea name='optionB_description' rows='4' cols='50'></textarea>
+							<textarea name='optionB_description' data-ng-model="optionB" data-ck-editor></textarea>
 						</div>
 						<div class="image">
 							<div class="upload">
@@ -94,7 +95,7 @@
 					<div class='option_c options'>
 						<p> Option C:</p>
 						<div class="description">
-							<textarea name='optionC_description' rows='4' cols='50'></textarea>
+							<textarea name='optionC_description' data-ng-model="optionC" data-ck-editor></textarea>
 						</div>
 						<div class="image">
 							<div class="upload">
@@ -106,7 +107,7 @@
 					<div class='option_d options'>
 						<p> Option D:</p>
 						<div class="description">
-							<textarea name='optionD_description' rows='4' cols='50'></textarea>
+							<textarea name='optionD_description' data-ng-model="optionD" data-ck-editor></textarea>
 						</div>
 						<div class="image">
 							<div class="upload">
@@ -118,39 +119,51 @@
 			</div>
 
 			<div class="estimates">
-				<h2> Time Estimate: <span style="font-size:11px;">(In Minutes)</span></h2>
+				<h2> Time Estimate: <span style= "font-size:11px; height: 850px;" >(In Minutes)</span></h2>
 				<input type="number" name="time_estimate" value=""/>
 			</div>
-			<div id="ans_result">
+			<div id="ans_result"  >
 				
 				<h2> Answer <span style="font-size:11px;">(Select the appropriate Question Type)</span>:</h2>
-				<div id="single_answer" class="left_30" style="display:none">
-					<label><input type="radio" name="answer" value="A"/>Option A</label>
-					<label><input type="radio" name="answer" value="B"/>Option B</label>
-					<label><input type="radio" name="answer" value="C"/>Option C</label>
-					<label><input type="radio" name="answer" value="D"/>Option D</label>
+				<div id="single_answer" class="left_30" style="display:none" >
+					<label><input type="radio" name="answer" ng-model="sigleans" value="A"/>Option A</label>
+					<label><input type="radio" name="answer" ng-model="sigleans" value="B"/>Option B</label>
+					<label><input type="radio" name="answer" ng-model="sigleans"  value="C"/>Option C</label>
+					<label><input type="radio" name="answer" ng-model="sigleans" value="D"/>Option D</label>
 				</div>
-				<div id="multiple_answer" class="left_30" style="display:none">
-					<label><input type="checkbox" name="answer" value="A"/>Option A</label>
-					<label><input type="checkbox" name="answer" value="B"/>Option B</label>
-					<label><input type="checkbox" name="answer" value="C"/>Option C</label>
-					<label><input type="checkbox" name="answer" value="D"/>Option D</label>
+				<div id="multiple_answer" class="left_30" style="display:none" >
+					<label><input type="checkbox" name="answer" ng-model="multi1" value="A"/>Option A</label>
+					<label><input type="checkbox" name="answer"  ng-model="multi2" value="B"/>Option B</label>
+					<label><input type="checkbox" name="answer" ng-model="multi3" value="C"/>Option C</label>
+					<label><input type="checkbox" name="answer"  ng-model="multi4" value="D"/>Option D</label>
 				</div>
 				
 			</div>
 		</div>
 		<div id="button_ctrls">
 			<input type="reset" value="Reset"/>
-			<a href=''>
-			<input type="button" ng-click="OpenPreview(this,event)" value="Preview" />
-			<input type="submit" value="Submit" />
+			<a href='/prev'>
+			<input type="button" ng-click="OpenPreview()" value="Preview" /></a>
+			<!--<input type="submit" value="Submit" />-->
+			<div id="quest">
+
+			</div>
+			<div id="optnA">
+
+			</div>
+			<div id="optnB">
+
+			</div>
+			<div id="optnC">
+
+			</div>
+			<div id="optnD">
+
+			</div>
+			
 		</div>
 	</form>
-</div>
-
-<div id="Preview_container">
-
-	<h1> Preview</h1>
+	<!--<h1> Preview</h1>
 	<ul class="category_hdr" >
 		<li>
 			<label >Subject : {~lb}{~lb}obj.x.SubjectId{~rb}{~rb}</label>
@@ -169,8 +182,13 @@
 			<label >Question Level : <span class="res_catrgory">{~lb}{~lb}obj.a.State{~rb}{~rb}</span></label>
 		</li>
 
-	</ul>
+	</ul>-->
 
+</div>
+
+<div id="Preview_container">
+
+	
 </div>
 
 
@@ -178,6 +196,27 @@
 
 <script>
 var pdpApp = angular.module("Selectbox",[]);
+
+pdpApp.directive('ckEditor', [function () {
+    return {
+        require: 'ngModel',
+        link: function ($scope, elm, attr, ngModel) {
+
+            var ck = CKEDITOR.replace(elm[0]);
+
+            ck.on('pasteState', function () {
+                $scope.$apply(function () {
+                    ngModel.$setViewValue(ck.getData());
+                });
+            });
+
+            ngModel.$render = function (value) {
+                ck.setData(ngModel.$modelValue);
+            };
+        }
+    };
+}]);
+
 pdpApp.controller("SelectController",function($scope, $http){
 
 	$scope.count = 0;
@@ -245,13 +284,76 @@ pdpApp.controller("SelectController",function($scope, $http){
         questionLevelRequest.error(function(data, status, headers, config) {
             console.log("error",data, status, headers, config);
         });
+        console.log('djbciudbc'+sessionStorage.getItem("Selectedoption0"));
 
+        $scope.OpenPreview = function(){
 
-        $scope.OpenPreview = function(elem,event){
-        console.log('console    '+event);
-        Preview_container.show();
+                		
+                		sessionStorage.setItem("question", $scope.questionTxt);
+						sessionStorage.setItem("opt1", $scope.optionA);
+						sessionStorage.setItem("opt2", $scope.optionB);
+						sessionStorage.setItem("opt3",  $scope.optionC);
+						sessionStorage.setItem("opt4", $scope.optionD);
+				  
+				  var count=0;
+				  var flag=false;
+					if($scope.obj.z.State=='single choice'){
+						if($scope.sigleans=='A'){
+							  sessionStorage.setItem("Selectedoption", $scope.optionA);
+							  }else if($scope.sigleans=='B'){
+							  sessionStorage.setItem("Selectedoption", $scope.optionB);
+							  }else if($scope.sigleans=='C'){
+							  sessionStorage.setItem("Selectedoption", $scope.optionC);
+							  }else if($scope.sigleans=='D'){
+							  sessionStorage.setItem("Selectedoption", $scope.optionD);
+							  };
+							  }else{
+							  
+							  
+								if($scope.multi1==true){
+								count++;
+								flag=true;
+								 sessionStorage.setItem("Selected0",flag);
+							      sessionStorage.setItem("Selectedoption0", $scope.optionA);
+							      }
+						      if($scope.multi2==true){
+						      flag=true;
+						       sessionStorage.setItem("Selected1",flag);
+						      sessionStorage.setItem("Selectedoption1", $scope.optionB);
+						      count++;
+						      }
+						      if($scope.multi3==true){
+						      flag=true;
+						      count++;
+						       sessionStorage.setItem("Selected2",flag);
+							  sessionStorage.setItem("Selectedoption2", $scope.optionC);
+                              }
+                              if($scope.multi4==true){
+                              flag=true;
+                              count++;
+                               sessionStorage.setItem("Selected3",flag);
+							  sessionStorage.setItem("Selectedoption3", $scope.optionD);
 
-        }
+                             };
+                             sessionStorage.setItem("count", count);
+                             
+							  }
+
+						 
+						  sessionStorage.setItem("subject", $scope.obj.x.SubjectName);
+						  sessionStorage.setItem("subtopic", $scope.obj.y.Title);
+						  sessionStorage.setItem("state", $scope.obj.z.State);
+						  sessionStorage.setItem("level", $scope.obj.a.LevelName);
+
+				  
+				};
+			 		
+       
+         
+         
+        
+
+        
 
                 
 });
@@ -262,15 +364,13 @@ var PreviewImage = function(elem, event) {
     var oFReader = new FileReader();
     oFReader.readAsDataURL(element[0].files[0]);
 
-    oFReader.onload = function (oFREvent) {
+    oFReader.onload = function (oFREvent){
         element.next('img').attr('src', oFREvent.target.result);
     };
 };
 
-CKEDITOR.disableAutoInline = true;
-CKEDITOR.tools.setTimeout( function(){ 
-	$( 'textarea' ).ckeditor();
-}, 0);
+
 
 
 </script>
+ 

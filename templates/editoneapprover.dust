@@ -10,7 +10,7 @@
 
 <!--QuestionLevelId: <input type=text name="levelid" ng-model=""><br><br>-->
 
-ApproverName: <input type=text name="approvername" ng-model="ApproverName"><br><br>
+ApproverName: <input type=text name="approvername" ng-model="ApproverName" readonly><br><br>
 <div>
 SubjectName: <input type=text name="SubjectName" ng-model="subjectname" required><br><br>
 </div>

@@ -39,7 +39,7 @@ Description: <textarea name="Description"ng-model="description" required></texta
           });
           
          $scope.go=function(Subjectname,description){ 
-        			var flag;
+        			var flag=true;
         			
         		
 		         for(var i=0;i<res.length;i++){

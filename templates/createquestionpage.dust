@@ -52,7 +52,7 @@
 				<h2> Question:</h2>
 
 					<div class="description">
-					<textarea name="questondescription" data-ng-model="questionTxt" data-ck-editor></textarea>
+					<textarea name="questiondescription" data-ng-model="questionTxt" data-ck-editor></textarea>
 						
 					</div>
 					<div class="image">
@@ -111,7 +111,7 @@
 						</div>
 						<div class="image">
 							<div class="upload">
-								<input type='file' name='optionD_image' accept='.png,.jpg,.jpeg' onchange='PreviewImage(this, event);'/><img class='preview' />
+								<input type='file' name='optionD_image' data-ng-model="optionD" accept='.png,.jpg,.jpeg' onchange='PreviewImage(this, event);'/><img class='preview' />
 							</div>
 						</div>
 					</div>
@@ -128,13 +128,13 @@
 				<div id="single_answer" class="left_30" style="display:none" >
 					<label><input type="radio" name="answer" ng-model="sigleans" value="A"/>Option A</label>
 					<label><input type="radio" name="answer" ng-model="sigleans" value="B"/>Option B</label>
-					<label><input type="radio" name="answer" ng-model="sigleans"  value="C"/>Option C</label>
+					<label><input type="radio" name="answer" ng-model="sigleans" value="C"/>Option C</label>
 					<label><input type="radio" name="answer" ng-model="sigleans" value="D"/>Option D</label>
 				</div>
 				<div id="multiple_answer" class="left_30" style="display:none" >
-					<label><input type="checkbox" name="answer" ng-model="multi1" value="A"/>Option A</label>
+					<label><input type="checkbox" name="answer"  ng-model="multi1" value="A"/>Option A</label>
 					<label><input type="checkbox" name="answer"  ng-model="multi2" value="B"/>Option B</label>
-					<label><input type="checkbox" name="answer" ng-model="multi3" value="C"/>Option C</label>
+					<label><input type="checkbox" name="answer"  ng-model="multi3" value="C"/>Option C</label>
 					<label><input type="checkbox" name="answer"  ng-model="multi4" value="D"/>Option D</label>
 				</div>
 				
@@ -177,7 +177,6 @@
 			<label >Question Type : <span class="res_catrgory">{~lb}{~lb}obj.z.State{~rb}{~rb}</span></label>
 		</li>
 
-
 		<li>
 			<label >Question Level : <span class="res_catrgory">{~lb}{~lb}obj.a.State{~rb}{~rb}</span></label>
 		</li>
@@ -190,7 +189,6 @@
 
 	
 </div>
-
 
 
 
@@ -292,7 +290,7 @@ pdpApp.controller("SelectController",function($scope, $http){
                 		sessionStorage.setItem("question", $scope.questionTxt);
 						sessionStorage.setItem("opt1", $scope.optionA);
 						sessionStorage.setItem("opt2", $scope.optionB);
-						sessionStorage.setItem("opt3",  $scope.optionC);
+						sessionStorage.setItem("opt3", $scope.optionC);
 						sessionStorage.setItem("opt4", $scope.optionD);
 				  
 				  var count=0;
@@ -305,7 +303,8 @@ pdpApp.controller("SelectController",function($scope, $http){
 							  }else if($scope.sigleans=='C'){
 							  sessionStorage.setItem("Selectedoption", $scope.optionC);
 							  }else if($scope.sigleans=='D'){
-							  sessionStorage.setItem("Selectedoption", $scope.optionD);
+							  consolelog($scope.optionD);
+							  sessionStorage.setItem("Selectedoption", 	$scope.optionD);
 							  };
 							  }else{
 							  
@@ -372,5 +371,4 @@ var PreviewImage = function(elem, event) {
 
 
 
-</script>
- 
+</script> 

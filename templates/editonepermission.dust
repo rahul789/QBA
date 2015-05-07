@@ -1,80 +1,61 @@
 {>"header"/}
 
-		<h2>Edit  New Permission</h2>
-
-
-
+<h2>Edit  New Permission</h2>
 
 <div ng-app="EditNewPermission" ng-controller="EditNewPermissionController">
 
-<!--QuestionLevelId: <input type=text name="levelid" ng-model=""><br><br>-->
 
-Permission: <input type=text name="state" ng-model="state" readonly><br><br>
-<div>
-Description: <textarea name="description"ng-model="description"></textarea><br><br>
-</div>
+    Permission: <input type=text name="state" ng-model="state" readonly><br><br>
+		<div>
+			Description: <textarea name="description"ng-model="description"></textarea><br><br>
+		</div>	
 
-<!--Flag:<input type=text name="Flag" ng-model="" value="true"><br><br>-->
 
-   <div id="button_ctrls">
-			  
+   		<div id="button_ctrls">  
 			 <a href="/editpermissn">
 			<input type="button" value="back" />
 			</a>
 		    <input type="submit" value="save" ng-click="goo()"/>
-		    
-
 		</div>
-		</form>
-			<script>
+<script>
 		
-        		var addstate= angular.module("EditNewPermission",[]);
-             addstate.controller("EditNewPermissionController",function($scope, $http){
-              console.log("****** ");
+        var addstate= angular.module("EditNewPermission",[]);
+            addstate.controller("EditNewPermissionController",function($scope, $http){
               
-              var sample=JSON.parse(sessionStorage.getItem("test"));
-                            console.log(JSON.stringify(sample));
+		            var sample=JSON.parse(sessionStorage.getItem("test"));
 
-              $scope.state=sample.State;
-              $scope.description=sample.Description;
-		              var res;
-             addtype=$http.get("/qba/editpermission").success(function(data) {
-            $scope.permission = data;
-            res=data;
-            console.log(JSON.stringify(data));
-            });
-          
-              $scope.goo=function(){
-              console.log("edited"+$scope.description);
-               var flag;
-        			
-        		
-		         for(var i=0;i<res.length;i++){
-		         console.log(i);
-		         	if((res[i].Description).toUpperCase() == $scope.description.toUpperCase()){
-		         	
-		        		 flag=false;
-		        		 break;
-		        	 	 }else{
-		        			 flag=true;
-		        			
-		        		 }
-		         };
+		            $scope.state=sample.State;
+		            $scope.description=sample.Description;
+				    var res;
+		            addtype=$http.get("/qba/editpermission").success(function(data) {
+							            $scope.permission = data;
+							            res=data;
+							            console.log(JSON.stringify(data));
+							            });
+		          
+		            $scope.goo=function(){
+			              var flag;
+			              for(var i=0;i<res.length;i++){
+					         	if((res[i].Description).toUpperCase() == $scope.description.toUpperCase()){
+					         	
+					        		 flag=false;
+					        		 break;
+					        	 	 }else{
+					        	     flag=true;
+					        			
+					        		 }
+					            };
 
-		          if(flag){
+					          	if(flag){
 
-		             var addper= $http.post("/addeditedpermission",{"PermissionId":sample.PermissionId,"description":$scope.description});
-                     window.location = "/editpermissn";
+						             var addper= $http.post("/addeditedpermission",{"PermissionId":sample.PermissionId,"description":$scope.description});
+				                     window.location = "/editpermissn";
 
-		         }else{
-		         alert('state already Exist');
-		          location.reload();
-        
-
-		             console.log('matched');
-		         }
-               }
+					        	}else{
+						        	 alert('state already Exist');
+						         	 location.reload();
+				                     }
+		            }
            });
-
 
 </script>

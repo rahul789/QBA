@@ -55,7 +55,6 @@ Description: <textarea name="Description"ng-model="description" required></texta
 		        if(flag){
 
 		        	
-		        	alert('question state added to database');
 		        var addSub= $http.post("/addnewstate",{"State":State,"Description":Description});
 
 		        	  window.location = "/editstate";

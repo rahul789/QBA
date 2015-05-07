@@ -55,7 +55,6 @@ Description: <textarea name="Description"ng-model="description" required></texta
 		        if(flag){
 
 		        	
-		        	alert('permission added to database');
 		        var addPer= $http.post("/addnewpermission",{"State":State,"Description":Description});
 
 		        	  window.location = "/editpermissn";

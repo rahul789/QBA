@@ -57,7 +57,6 @@ Description: <textarea name="Description"ng-model="description" required></texta
 
 		        	var addSub= $http.post("/addnewtopic",{"Subjectname":Subjectname,"Description":description});
 		        	
-		        	alert('subject added to database');
 		        	  window.location = "/edittopic";
   
 		        	                     

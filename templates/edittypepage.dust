@@ -1,10 +1,9 @@
 {>"header"/}
 
-    <h2>Edit Question Type</h2>
+<h2>Edit Question Type</h2>
 
-       <script data-require="angular.js@*" data-semver="1.2.0-rc3-nonmin" src="http://code.angularjs.org/1.2.0-rc.3/angular.js"></script>
-      <script data-require="ng-table@*" data-semver="0.3.0" src="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.js"></script>
-     
+      <script data-require="angular.js@*" data-semver="1.2.0-rc3-nonmin" src="http://code.angularjs.org/1.2.0-rc.3/angular.js"></script>
+      <script data-require="ng-table@*" data-semver="0.3.0" src="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.js"></script>    
       <link data-require="ng-table@*" data-semver="0.3.0" rel="stylesheet" href="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.css" />
       <link data-require="bootstrap-css@*" data-semver="3.0.0" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
       
@@ -14,35 +13,31 @@
 <div ng-app="" ng-controller="EditTypeController">
 
     <table ng-table class="table">
-       <tr>
-         <td><b>QuestionType</b></td>
-         <td><b>Description</b></td>
-         <td><b>Action</b></td>
-    </tr>
-        <tr ng-repeat="x in questiontype" >
-          
-          <td>{{ x.State }} </td>
-          <td>{{ x.Description }} </td>
-                 
-
-          <td> <a  href="/editonetype">
-           <input type="button" ng-click="go(x)" value="Edit"/></a></td>
-          <td> <input type="button" ng-click="RemoveType(this,event, '{~lb}{~lb}x.QuestionTypeId{~rb}{~rb}')" value="Remove" /></td>
-         
-         </a>
-      </tr>
-      
+           <tr>
+               <td><b>QuestionType</b></td>
+               <td><b>Description</b></td>
+               <td><b>Action</b></td>
+           </tr>
+           <tr ng-repeat="x in questiontype" >          
+                <td>{{ x.State }} </td>
+                <td>{{ x.Description }} </td>
+                <td> <a  href="/editonetype">
+                <input type="button" ng-click="go(x)" value="Edit"/></a></td>
+                <td> <input type="button" ng-click="RemoveType(this,event, '{~lb}{~lb}x.QuestionTypeId{~rb}{~rb}')" value="Remove" /></td>
+           </tr>
     </table>
+
     <div id="button_ctrl">
-      <a href="/edittopic/addnewtype">
+        <a href="/edittopic/addnewtype">
         <input type="button" value="Add" /></a>
         <a href="/">
-         <input type="button" value="BACK"/>
-     </a>
-       <div>
+        <input type="button" value="BACK"/>
+        </a>
+    <div>
 
 </div>
-    <script>
+
+ <script>
 
      function EditTypeController($scope,$http){
 
@@ -50,22 +45,22 @@
             $scope.questiontype = data;
             console.log(JSON.stringify(data));
           });
-            $scope.go = function(recievedata){
-        console.log('dkjcbsodcj n'+recievedata);
-      var twist=JSON.stringify(recievedata);
-         sessionStorage.setItem("test", twist );
+         $scope.go = function(recievedata){
+              console.log('dkjcbsodcj n'+recievedata);
+              var twist=JSON.stringify(recievedata);
+              sessionStorage.setItem("test", twist );
          };
-  $scope.RemoveType = function(elem, event, questiontypeid) {
+      $scope.RemoveType = function(elem, event, questiontypeid) {
         
                       if(questiontypeid && questiontypeid !=''){
-                      console.log(questiontypeid);
-                        var removetyp= $http.post("/removetype",{"questiontypeid":questiontypeid});
-                        removetyp.success(function(data, status, headers, config) {
-                           $scope.removed = status;
-                           console.log("datatata"+JSON.stringify(status));
-                                           if(status==200){
-                                           location.reload();
-                  }
+                                console.log(questiontypeid);
+                                var removetyp= $http.post("/removetype",{"questiontypeid":questiontypeid});
+                                removetyp.success(function(data, status, headers, config) {
+                                                          $scope.removed = status;
+                                                          console.log("datatata"+JSON.stringify(status));
+                                                          if(status==200){
+                                                                    location.reload();
+                                                           }
                               
 
 
@@ -74,4 +69,4 @@
         };
 
           };
-    </script>
+ </script>

@@ -1,66 +1,52 @@
 {>"header"/}
 
 <h2>Add Approver</h2>
-
-
-
-
 <div ng-app="EditApproverBox" ng-controller="AddNewApproverController">
-		<!--<form method="post" action="/addnewapprover" enctype="multipart/form-data">-->
 
 
 
-ApproverName: <input type=text name="approvername" ng-model="approvername" required><br><br>
-<div>
-Subject: <input type=text name="subjectname" ng-model="subjectname" required><br><br>
-</div>
+	ApproverName: <input type=text name="approvername" ng-model="approvername" required><br><br>
+	Subject: <input type=text name="subjectname" ng-model="subjectname" required><br><br>
 
-   <div id="button_ctrls">
-			  
-			 <a href="/editappvr">
+         <div id="button_ctrls">	  
+			<a href="/editappvr">
 			<input type="button" value="back" />
 			</a>
-			
-		    <input type='button' value="save" ng-click="go(approvername,subjectname)"/>
-		    
+		    <input type='button' value="save" ng-click="go(approvername,subjectname)"/>				    
 
 		</div>
-		</div>
-		<script>
+</div>
+<script>
 		
      
 		var addapprover= angular.module("EditApproverBox",[]);
-             addapprover.controller("AddNewApproverController",function($scope, $http){
-              var res;
-             addapprover=$http.get("/approver").success(function(data) {
-            $scope.Approver = data;
-            res=data;
-            console.log(JSON.stringify(data));
+	        addapprover.controller("AddNewApproverController",function($scope, $http){
+				             var res;
+				             addapprover=$http.get("/approver").success(function(data) {
+				             $scope.Approver = data;
+				             res=data;
+				             console.log(JSON.stringify(data));
 
-          });
+            });
           
            $scope.go=function(approvername,subjectname){ 
-        			var flag=true;
-        			 for(var i=0;i<res.length;i++){
-		         console.log(i);
-		      if((res[i].ApproverName).toUpperCase() == approvername.toUpperCase() && res[i].SubjectName.toUpperCase() == subjectname.toUpperCase()){
+        		var flag=true;
+        		for(var i=0;i<res.length;i++){
+		        console.log(i);
+		        if((res[i].ApproverName).toUpperCase() == approvername.toUpperCase() && res[i].SubjectName.toUpperCase() == subjectname.toUpperCase()){
 		         	
 		        		 flag=false;
 		        		 break;
 		        	 	 }else{
-		        			 flag=true;
-		        			
-		        		 }
+		        	     flag=true;
+		        			 }
 		         };
 		        if(flag){
 
 		        	var addapp= $http.post("/addnewapprover",{"approvername":approvername,"subjectname":subjectname});
-		        	
-		        	alert('Aprover added to database');
-		        	  window.location = "/editappvr";
+		        	window.location = "/editappvr";
   
 		        	                     
-                 console.log('not matched');
 		         }else{
 		         alert('Approver already Exist');
 		                     
@@ -68,10 +54,10 @@ Subject: <input type=text name="subjectname" ng-model="subjectname" required><br
 
 		             console.log('matched');
 		         }
-		        }
+		    }
 
         
-           });
+         });
       
 
 </script>

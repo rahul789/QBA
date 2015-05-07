@@ -6,16 +6,13 @@
 
 
 <div ng-app="EditLevelBox" ng-controller="AddNewLevelController">
-	<!--<form method="post" action="/addnewlevel" enctype="multipart/form-data">
 
-QuestionLevelId: <input type=text name="levelid" ng-model=""><br><br>-->
 
 LevelName: <input type=text name="levelname" ng-model="levelname" required><br><br>
 <div>
 Description: <textarea name="leveldescription"ng-model="leveldescription" required\></textarea><br><br>
 </div>
 
-<!--Flag:<input type=text name="Flag" ng-model="" value="true"><br><br>-->
 
    <div id="button_ctrls">
 			  
@@ -63,7 +60,6 @@ Description: <textarea name="leveldescription"ng-model="leveldescription" requir
 
 		        	var addlev= $http.post("/addnewlevel",{"levelname":levelname,"leveldescription":leveldescription});
 		        	
-		        	alert('level added to database');
 		        	  window.location = "/editlev";
   
 		        	                     

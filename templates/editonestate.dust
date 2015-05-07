@@ -18,7 +18,7 @@ Description: <textarea name="description"ng-model="description"></textarea><br><
 
    <div id="button_ctrls">
 			  
-			 <a href="/">
+			 <a href="/editstate">
 			<input type="button" value="back" />
 			</a>
 		    <input type="submit" value="save" ng-click="goo()"/>

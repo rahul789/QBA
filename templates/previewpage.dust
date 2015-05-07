@@ -92,7 +92,7 @@
              if((sessionStorage.getItem("Selected"+i))=='true'){
              console.log('ans  '+sessionStorage.getItem("Selectedoption"+i));
              var label = document.createElement('label');
-              document.getElementById('block').appendChild(label);
+              document.getElementById('block').appendChild(label);	
               label.innerHTML =sessionStorage.getItem("Selectedoption"+i);
              }
               };
@@ -103,13 +103,26 @@
     		};
     		 $scope.goback = function(){
 
-    		
-             
+
     		sessionStorage.removeItem('Selectedoption0');
     		sessionStorage.removeItem('Selectedoption1');
     		sessionStorage.removeItem('Selectedoption2');
     		sessionStorage.removeItem('Selectedoption3');
-    	   
+
+
+    		 var params={
+    		 subject:sessionStorage.getItem("subject"),
+    		 subtopic:sessionStorage.getItem("subtopic"),
+    		 state:sessionStorage.getItem("state"),
+    		 level:sessionStorage.getItem("level"),
+    		 OptionA:sessionStorage.getItem("opt1"),
+    		 OptionB:sessionStorage.getItem("opt2"),
+    		 OptionC:sessionStorage.getItem("opt3"),
+    		 OptionD:sessionStorage.getItem("opt4"),
+    		 answer:sessionStorage.getItem("Selectedoption"),
+             
+    		 };
+    	   console.log(JSON.stringify(params));
     		}
     		
        });
